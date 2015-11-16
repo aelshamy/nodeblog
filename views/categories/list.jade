@@ -1,0 +1,30 @@
+extends ../layout
+
+block content
+    h1.page-header= title
+      | 
+      div.pull-right
+        a.btn.btn-success(href="/manage/categories/add")
+          i.fa.fa-plus 
+          |  Add New
+    p.page-subheader All you need to manage your categories
+    if categories
+      .dataTable_wrapper
+        table.table-listing.table.table-striped.table-bordered.table-hover
+          thead
+            tr
+              th(width='30%') Title
+              th(width='60%') Description
+              th(width='10%') Actions
+          tbody
+            each category, i in categories
+              tr.odd.gradeX
+                td #{category.title}
+                td #{category.description}
+                td(align='center')
+                  a(href='/manage/categories/#{category._id}', class='btn btn-warning btn-circle', title='Edit Category')
+                      i.fa.fa-pencil 
+                  |  
+                  a(href='/manage/categories/remove/#{category._id}', class='btn btn-danger btn-circle', title='Remove Category')
+                      i.fa.fa-remove
+        // /.table-responsive

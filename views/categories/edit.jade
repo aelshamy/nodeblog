@@ -1,0 +1,21 @@
+extends ../layout
+
+
+block content
+
+	h1=title
+	if errors
+		.alert.alert-danger
+			ul.errors
+					each error, i in errors
+						li #{error.msg}
+	form(action="/manage/categories/#{category._id}", method='post')
+		.form-group
+			label Title
+			input.form-control(type="text", name='title', value='#{category.title}')
+		.form-group
+			label Description
+			textarea.form-control(name='description')
+				| #{category.description}
+		input.btn.btn-default(type="submit", value='Save', name='submit')
+			

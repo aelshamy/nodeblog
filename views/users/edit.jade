@@ -1,0 +1,32 @@
+extends ../layout
+
+
+block content
+
+	h1.page-header= title
+	if errors
+		.alert.alert-danger
+			ul.errors
+					each error, i in errors
+						li #{error.msg}
+	form(action="/manage/users/#{user._id}", method='post', enctype='multipart/form-data')
+		.form-group
+			label Name
+			input.form-control(type="text", name='name', value='#{user.name}')
+		.form-group
+			label Username
+			input.form-control.disabled(type="text", name='username', value='#{user.username}')
+		.form-group
+			label Password
+			input.form-control(type="password", name='password', placeholder='Enter Password')
+		.form-group
+			label Confirm Password
+			input.form-control(type="password", name='password2', placeholder='Confirm Password')
+		.form-group
+			label Email
+			input.form-control(type="email", name='email', value='#{user.email}')
+		.form-group
+			label Profile Image
+			input.form-control(type="file", name='profile_image')
+		input.btn.btn-default(type="submit", value='Update', name='submit')
+			

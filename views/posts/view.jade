@@ -1,0 +1,57 @@
+extends ../blog
+
+block content
+
+    // Page Header
+    // Set your background image for this header on the line below.
+    header.intro-header(style="background-image: url('/images/uploads/#{post.image}')")
+      .container
+        .row
+          .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
+            .post-heading
+              h1 #{post.title}
+              h2.subheading Problems look mighty small from 150 miles up
+              span.meta
+                | Posted on 
+                a(href='/categories/show/#{post.category}') #{post.category}
+                |  by 
+                a(href='/posts/author/#{post.author}') #{post.author} 
+                | on #{moment(post.date).format('DD-MM-YYYY')}
+    // Post Content
+    article
+      .container
+        .row
+          .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
+            p!=post.body
+            
+            if post.comments.length
+                hr
+                h3 Comments
+                each comment, i in post.comments
+                    div.media
+                        a.pull-left(href="#")
+                            img.img-circle.media-object(src="/images/uploads/placeholder.jpg", alt="", width="64", height="64")
+                        .media-body
+                            h4.media-heading #{comment.name}
+                                small  #{moment(comment.commentDate).format('MMMM DD, YYYY [at] hh:mm a')}
+                            p #{comment.body}
+            hr
+            h3 Add Comments
+            if errors
+                .alert.alert-danger
+                    ul.errors
+                            each error, i in errors
+                                li #{error.msg}
+            .well                    
+                form(action="/posts/addcomment", method='post')
+                    input(name='postid', type="hidden", value="#{post._id}")
+                    .form-group
+                        label Name
+                        input.form-control(type="text", name='name', placeholder='Enter Name')
+                    .form-group
+                        label Email
+                        input.form-control(type="email", name='email', placeholder='Enter Email')
+                    .form-group
+                        label Body
+                        textarea.form-control(name='body', id='body', rows=6)
+                    input.btn.btn-default(type="submit", value='Add Comment', name='submit')

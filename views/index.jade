@@ -1,0 +1,46 @@
+extends blog
+
+// Page Header
+// Set your background image for this header on the line below.
+block content
+    header.intro-header(style="background-image: url('/images/home-bg.jpg')")
+      .container
+        .row
+          .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
+            .site-heading
+              h1 Node Blog
+              hr.small
+              span.subheading Your way around stuff
+    .container
+      .row
+        .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
+            if title
+                h3.category-heading=title
+                hr
+            if posts
+                each post, i in posts
+                    .post-preview
+                         a(href='/posts/show/#{post._id}')
+                          h2.post-title #{post.title}
+                          h3.post-subtitle
+                            | Problems look mighty small from 150 miles up
+                        p.post-meta
+                            | posted on 
+                            a(href='/categories/show/#{post.category}') #{post.category}
+                            |  by 
+                            a(href='/posts/author/#{post.author}') #{post.author} 
+                            | on #{moment(post.date).format('DD-MM-YYYY')}
+                    // /.post-preview
+                    hr
+            else
+                p.noposts  There is no posts to display
+
+            // Pager
+            ul.pager
+                li.previous
+                  if page
+                    a(href= '#{previousPageLink}') ← Newest Posts
+                if posts.length == pagesize
+                  li.next
+                      a(href='#{nextPageLink}') Older Posts → 
+              // /.blog-main
