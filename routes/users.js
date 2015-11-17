@@ -73,26 +73,6 @@ router.post('/register', function(req, res, next) {
             profile_image: profile_image
         });
 
-        User.getUserByUsername(function(err, user) {
-
-            if (err) {
-
-            } else {
-
-                res.render('register', {
-                    errors: errors,
-                    name: name,
-                    email: email,
-                    username: username,
-                    password: password,
-                    password2: password2
-                });
-
-            }
-
-        })
-
-
         // create user
         User.createUser(newUser, function(err, user) {
             if (err) {
@@ -143,7 +123,7 @@ passport.use(new LocalStrategy(
                 }
             });
 
-            if (!user.isActive) {
+            if(!user.isActive){
                 return done(null, false, {
                     message: 'User Not Active'
                 });
