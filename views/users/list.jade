@@ -14,8 +14,9 @@ block content
           thead
             tr
               th(width='30%') Name
-              th(width='30%') Username
+              th(width='20%') Username
               th(width='30%') email
+              th(width='10%') Active
               th(width='10%') Actions
           tbody
             each user, i in users
@@ -23,6 +24,7 @@ block content
                 td #{user.name}
                 td #{user.username}
                 td #{user.email}
+                td #{user.isActive}
                 td(align='center')
                   a(href='/manage/users/#{user._id}', class='btn btn-warning btn-circle', title='Edit User')
                       i.fa.fa-pencil 

@@ -6,7 +6,7 @@ html(lang='en')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     meta(name='description', content='')
     meta(name='author', content='')
-    title Node Blog
+    title=brand
     // Bootstrap Core CSS
     link(href='/bower_components/bootstrap/dist/css/bootstrap.min.css', rel='stylesheet')
     // Custom CSS
@@ -26,37 +26,32 @@ html(lang='en')
       .container-fluid
         // Brand and toggle get grouped for better mobile display
         .navbar-header.page-scroll
-          button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
-            span.sr-only Toggle navigation
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a.navbar-brand(href='/') Node Blog
+          //- button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+          //-   span.sr-only Toggle navigation
+          //-   span.icon-bar
+          //-   span.icon-bar
+          //-   span.icon-bar
+          a.navbar-brand(href='/')=brand
         // Collect the nav links, forms, and other content for toggling
-        .collapse.navbar-collapse
-          ul.nav.navbar-nav.navbar-right
-            li
-             a.blog-nav-item(href='/', class= (title == 'Home'? 'active': '')) Home
-            li
-             a.blog-nav-item(href='/', class= (title == 'Home'? 'active': '')) Login
-            li
-             a.blog-nav-item(href='/', class= (title == 'Home'? 'active': '')) Register
-            li.dropdown
-              a.dropdown-toggle(data-toggle='dropdown', href='#') 
-                | Manage 
-                i.fa.fa-caret-down
-              ul.dropdown-menu
-                li
-                  a(href='/manage/posts') Posts
-                li
-                  a(href='/manage/categories') Categories
-                li
-                  a(href='/manage/users') Users
-                li.divider
-                li
-                  a(href='/manage/users') Logout
-          // /.dropdown
-        // /.navbar-collapse
+        if user
+          .collapse.navbar-collapse
+            ul.nav.navbar-nav.navbar-right
+              li.dropdown
+                a.dropdown-toggle(data-toggle='dropdown', href='#') 
+                  | Manage 
+                  i.fa.fa-caret-down
+                ul.dropdown-menu
+                  li
+                    a(href='/manage/posts') Posts
+                  li
+                    a(href='/manage/categories') Categories
+                  li
+                    a(href='/manage/users') Users
+                  li.divider
+                  li
+                    a(href='/users/logout') Logout
+              // /.dropdown
+          // /.navbar-collapse
       // /.container
     // Main Content
     

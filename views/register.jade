@@ -1,0 +1,44 @@
+extends blog
+
+
+// Page Header
+// Set your background image for this header on the line below.
+block content
+	header.intro-header(style="background-image: url('/images/home-bg.jpg')")
+		.container
+			.row
+				.col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
+					.site-heading
+						h1=brand
+						hr.small
+						span.subheading Your way around stuff
+	.container
+		.row
+			.col-lg-6.col-lg-offset-3.col-md-10.col-md-offset-1
+				if errors
+					.alert.alert-danger
+						ul.errors
+								each error, i in errors
+									li #{error.msg}
+				form(action="/users/register", method='post', enctype='multipart/form-data')
+					.form-group
+						label Name
+						input.form-control(type="text", name='name', placeholder='Enter Name')
+					.form-group
+						label Email
+						input.form-control(type="email", name='email', placeholder='Enter Email')
+					.form-group
+						label Username
+						input.form-control(type="text", name='username', placeholder='Username')
+					.form-group
+						label Password
+						input.form-control(type="password", name='password', placeholder='Enter Password')
+					.form-group
+						label Confirm Password
+						input.form-control(type="password", name='password2', placeholder='Confirm Password')
+					.form-group
+						label Profile Image
+						input.form-control(type="file", name='profileimage')
+					input.btn.btn-primary(type="submit", value='Register', name='submit')
+					a.btn.btn-info.pull-right(href='/users/login') Sign in
+			

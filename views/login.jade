@@ -1,0 +1,29 @@
+extends blog
+
+
+// Page Header
+// Set your background image for this header on the line below.
+block content
+	header.intro-header(style="background-image: url('/images/home-bg.jpg')")
+		.container
+			.row
+				.col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
+					.site-heading
+						h1=brand
+						hr.small
+						span.subheading Your way around stuff
+	.container
+		.row
+			.col-lg-5.col-lg-offset-3.col-md-10.col-md-offset-1
+				form.form-signin(action="/users/login", , method='post', enctype='multipart/form-data')
+						h2.form-signin-heading Please sign in
+						.form-group
+							input.form-control(type='text', placeholder='Username',name='username',  required='', autofocus='')
+						.form-group
+							input.form-control(type='password', placeholder='Password', name='password',  required='')
+						.checkbox
+							label
+								input(type='checkbox', value='remember-me') 
+								| Remember me
+						button.btn.btn-primary(type='submit') Sign in
+						a.btn.btn-info.pull-right(href='/users/register') Register

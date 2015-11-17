@@ -25,6 +25,10 @@ block content
 		.form-group
 			label Email
 			input.form-control(type="email", name='email', value='#{user.email}')
+		.checkbox
+			label
+				input(type='checkbox', name='isActive', value="true", checked=(user.isActive)) 
+				| Active
 		.form-group
 			label Profile Image
 			input.form-control(type="file", name='profile_image')

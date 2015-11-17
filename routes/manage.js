@@ -10,7 +10,7 @@ var User = require('../models/user');
 
 
 /* Mange Categories */
-router.get('/posts', function(req, res, next) {
+router.get('/posts', ensureAuthenticated, function(req, res, next) {
 
     Post.getPosts(function(err, posts) {
 
@@ -26,10 +26,10 @@ router.get('/posts', function(req, res, next) {
 });
 
 
-router.get('/posts/add', function(req, res, next) {
+router.get('/posts/add', ensureAuthenticated, function(req, res, next) {
 
     Category.getCategories(function(err, categories) {
-        User.getUsers(function(err, users) {
+        User.getUsers({}, function(err, users) {
             res.render('posts/add', {
                 title: 'Add Post',
                 categories: categories,
@@ -42,7 +42,7 @@ router.get('/posts/add', function(req, res, next) {
 
 });
 
-router.post('/posts/add', function(req, res, next) {
+router.post('/posts/add', ensureAuthenticated, function(req, res, next) {
 
     //get form value
     var title = req.body.title;
@@ -116,7 +116,7 @@ router.post('/posts/add', function(req, res, next) {
 
 });
 
-router.get('/posts/:id', function(req, res, next) {
+router.get('/posts/:id', ensureAuthenticated, function(req, res, next) {
 
     Post.getPostById(req.params.id,
         function(err, post) {
@@ -124,7 +124,7 @@ router.get('/posts/:id', function(req, res, next) {
             if (err) throw err;
 
             Category.getCategories(function(err, categories) {
-                User.getUsers(function(err, users) {
+                User.getUsers({}, function(err, users) {
                     res.render('posts/edit', {
                         title: 'Edit Post',
                         post: post,
@@ -139,7 +139,7 @@ router.get('/posts/:id', function(req, res, next) {
 });
 
 
-router.post('/posts/:id', function(req, res, next) {
+router.post('/posts/:id', ensureAuthenticated, function(req, res, next) {
 
     //get form value
     var title = req.body.title;
@@ -169,7 +169,7 @@ router.post('/posts/:id', function(req, res, next) {
     if (errors) {
 
         Category.getCategories(function(err, categories) {
-            User.getUsers(function(err, users) {
+            User.getUsers({}, function(err, users) {
                 res.render('posts/edit', {
                     errors: errors,
                     post: {
@@ -219,7 +219,7 @@ router.post('/posts/:id', function(req, res, next) {
 
 
 
-router.get('/posts/remove/:id', function(req, res, next) {
+router.get('/posts/remove/:id', ensureAuthenticated, function(req, res, next) {
 
     Post.removePost(req.params.id,
         function(err, post) {
@@ -235,7 +235,7 @@ router.get('/posts/remove/:id', function(req, res, next) {
 });
 
 /* Mange Categories */
-router.get('/categories', function(req, res, next) {
+router.get('/categories', ensureAuthenticated, function(req, res, next) {
 
     Category.getCategories(function(err, categories) {
 
@@ -250,7 +250,7 @@ router.get('/categories', function(req, res, next) {
 
 });
 
-router.get('/categories/add', function(req, res, next) {
+router.get('/categories/add', ensureAuthenticated, function(req, res, next) {
 
     res.render('categories/add', {
         title: 'Add Category'
@@ -258,7 +258,7 @@ router.get('/categories/add', function(req, res, next) {
 
 });
 
-router.post('/categories/add', function(req, res, next) {
+router.post('/categories/add', ensureAuthenticated, function(req, res, next) {
 
 
     //get form value
@@ -301,7 +301,7 @@ router.post('/categories/add', function(req, res, next) {
 });
 
 
-router.get('/categories/:id', function(req, res, next) {
+router.get('/categories/:id', ensureAuthenticated, function(req, res, next) {
 
     Category.getCategoryById(req.params.id,
         function(err, category) {
@@ -317,7 +317,7 @@ router.get('/categories/:id', function(req, res, next) {
 });
 
 
-router.post('/categories/:id', function(req, res, next) {
+router.post('/categories/:id', ensureAuthenticated, function(req, res, next) {
 
 
     var updatedCategory = {
@@ -340,7 +340,7 @@ router.post('/categories/:id', function(req, res, next) {
 });
 
 
-router.get('/categories/remove/:id', function(req, res, next) {
+router.get('/categories/remove/:id', ensureAuthenticated, function(req, res, next) {
 
     Category.removeCategory(req.params.id,
         function(err, category) {
@@ -357,9 +357,9 @@ router.get('/categories/remove/:id', function(req, res, next) {
 
 /* Mange Users */
 
-router.get('/users', function(req, res, next) {
+router.get('/users', ensureAuthenticated, function(req, res, next) {
 
-    User.getUsers(function(err, users) {
+    User.getUsers({}, function(err, users) {
 
         if (err) throw err;
         res.render('users/list', {
@@ -372,7 +372,7 @@ router.get('/users', function(req, res, next) {
 
 });
 
-router.get('/users/add', function(req, res, next) {
+router.get('/users/add', ensureAuthenticated, function(req, res, next) {
 
     res.render('users/add', {
         title: 'Register New User'
@@ -380,7 +380,7 @@ router.get('/users/add', function(req, res, next) {
 
 });
 
-router.post('/users/add', function(req, res, next) {
+router.post('/users/add', ensureAuthenticated, function(req, res, next) {
 
 
     //get form values
@@ -447,7 +447,7 @@ router.post('/users/add', function(req, res, next) {
 });
 
 
-router.get('/users/:id', function(req, res, next) {
+router.get('/users/:id', ensureAuthenticated, function(req, res, next) {
 
     User.getUserById(req.params.id,
         function(err, user) {
@@ -463,7 +463,7 @@ router.get('/users/:id', function(req, res, next) {
 });
 
 
-router.post('/users/:id', function(req, res, next) {
+router.post('/users/:id', ensureAuthenticated, function(req, res, next) {
 
 
     //get form values
@@ -471,7 +471,10 @@ router.post('/users/:id', function(req, res, next) {
     var password = req.body.password;
     var password2 = req.body.password2;
     var email = req.body.email;
+    var isActive = req.body.isActive;
     var image = req.files[0];
+
+    console.log(isActive);
 
     // check for image field
     if (image && image.fieldname == 'profile_image') {
@@ -499,6 +502,7 @@ router.post('/users/:id', function(req, res, next) {
                 _id: req.params.id,
                 name: name,
                 email: email,
+                isActive: isActive,
                 username: req.body.username
             }
         });
@@ -509,7 +513,12 @@ router.post('/users/:id', function(req, res, next) {
         };
         // if password changed set the new one
         if (password.length > 0) {
-            updatedUser.password = password
+            updatedUser.password = password;
+        }
+
+        //check if active state is changed 
+        if(isActive){
+        	updatedUser.isActive = isActive;
         }
 
         // if profile image changed
@@ -533,7 +542,7 @@ router.post('/users/:id', function(req, res, next) {
 
 });
 
-router.get('/users/remove/:id', function(req, res, next) {
+router.get('/users/remove/:id', ensureAuthenticated, function(req, res, next) {
 
     User.removeUser(req.params.id,
         function(err, user) {
@@ -547,6 +556,14 @@ router.get('/users/remove/:id', function(req, res, next) {
         });
 
 });
+
+function ensureAuthenticated(req, res, next){
+	if(req.isAuthenticated()){
+		return next()
+	}else{
+		res.redirect('/');
+	}
+}
 
 
 module.exports = router;

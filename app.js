@@ -3,6 +3,8 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var expressValidator = require('express-validator');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require('body-parser');
@@ -37,6 +39,7 @@ var posts = require('./routes/posts');
 var categories = require('./routes/categories');
 var uploads = require('./routes/uploads');
 var manage = require('./routes/manage');
+var users = require('./routes/users');
 
 var app = express();
 
@@ -46,9 +49,13 @@ app.locals.truncate = require('truncate');
 app.locals.changeCase = require('change-case');
 
 app.locals.pagesize = 5;
+app.locals.brand = 'Node Blog';
+app.locals.adminBrand = 'Node Admin';
 
 app.use(function(req, res, next) {
   res.locals.pagesize = app.locals.pagesize;
+  // res.locals.brand = app.locals.brand;
+  // res.locals.adminBrand = app.locals.adminBrand;
   next();
 });
 
@@ -73,6 +80,10 @@ app.use(session({
     saveUninitialized: true,
     resave: true
 }));
+
+//passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 //validator
@@ -105,12 +116,11 @@ app.use(function(req, res, next) {
     next();
 });
 
-//make our db accessible to our route
-app.use(function(req, res, next) {
-    req.db = db;
+//give acess to user object in all views
+app.get('*', function(req, res, next) {
+    res.locals.user = req.user || null;
     next();
 });
-
 
 
 app.use('/', index);
@@ -118,6 +128,7 @@ app.use('/posts', posts);
 app.use('/categories', categories);
 app.use('/uploads', uploads);
 app.use('/manage', manage);
+app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

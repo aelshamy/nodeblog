@@ -38,3 +38,6 @@ body{font-family:Lora,'Times New Roman',serif;font-size:20px;color:#404040}p{lin
     font-size: 16px;
     text-align: right;
 }
+.checkbox label, .radio label{
+    font-size:14px;
+}

@@ -20,6 +20,10 @@ userSchema = mongoose.Schema({
     },
     profile_image: {
         type: String
+    },
+    isActive: {
+        type: Boolean,
+        default: false
     }
 });
 
@@ -27,14 +31,14 @@ var User = module.exports = mongoose.model('User', userSchema);
 
 
 // Get Users
-module.exports.getUsers = function(callback, limit) {
-    User.find(callback).limit(limit);
+module.exports.getUsers = function(query, callback, limit) {
+    User.find(query, callback).limit(limit);
 }
 
 // Get User by Username
 module.exports.getUserByUsername = function(username, callback) {
     var query = {
-        username: username
+        username: username.toLowerCase()
     };
     User.findOne(query, callback);
 }
@@ -72,7 +76,8 @@ module.exports.updateUser = function(id, newUser, options, callback) {
 
     var values = {
         name: newUser.name,
-        email: newUser.email
+        email: newUser.email,
+        isActive: newUser.isActive
     }
     if (newUser.profile_image) {
         values.profile_image = newUser.profile_image
@@ -110,4 +115,3 @@ module.exports.removeUser = function(id, callback) {
     }, callback);
 
 };
-
